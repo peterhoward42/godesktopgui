@@ -30,8 +30,17 @@ o  Get into github
     *  copy in this project
     *  push back to remove
     *  add image of gui
-    o  add bin of gui - beware .ignore
+    *  add bin of gui - beware .ignore
     o  do reamde incl image and bin
+        o  what is
+        o  view screenshot or try win bin (do zip or clone)
+        o  how to build
+            o  install go
+            o  3 go get
+            o  go build
+            o  go install
+            o  exe in blah
+            o  run it - follow console dirn to point browser
 o  Design talk / presso
 o  Decide how to pub
 
