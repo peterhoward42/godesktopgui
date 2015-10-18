@@ -1,7 +1,7 @@
 package main
 
 import (
-    "fmt"
+	"fmt"
 	"html/template"
 	"net/http"
 
@@ -27,20 +27,20 @@ func main() {
 		Asset: resources.Asset, AssetDir: resources.AssetDir, Prefix: ""}
 
 	// Prepare an html template that will be combined with a data model to
-    // serve html pages.
+	// serve html pages.
 	gui_html_template = extract_and_parse_html_template()
 
-	// Route incoming web page requests for static URLs (like css files) to 
-    // the standard library's file server.
+	// Route incoming web page requests for static URLs (like css files) to
+	// the standard library's file server.
 	http.Handle("/static/", http.FileServer(virtual_fs))
 
-    // Route incoming web page requests for the GUI home page to the dedicated
-    // handler.
+	// Route incoming web page requests for the GUI home page to the dedicated
+	// handler.
 	http.HandleFunc("/thegui", gui_home_page_handler)
 
-    fmt.Printf(
-        "To see the GUI, visit this URL with your Web Browser:\n\n %s\n\n",
-        "http://localhost:47066/thegui")
+	fmt.Printf(
+		"To see the GUI, visit this URL with your Web Browser:\n\n %s\n\n",
+		"http://localhost:47066/thegui")
 
 	// Spin-up the standard library's http server on a hard-coded port.
 	http.ListenAndServe(":47066", nil)
@@ -69,7 +69,7 @@ type GuiDataModel struct {
 	RowsInTable []TableRow
 }
 
-// A sub-model to the GuiDataModel that models a single row in the table 
+// A sub-model to the GuiDataModel that models a single row in the table
 // displayed in the GUI.
 type TableRow struct {
 	File    string
@@ -78,7 +78,7 @@ type TableRow struct {
 	Icon    string
 }
 
-// Sends the html required to render the GUI into the provided http 
+// Sends the html required to render the GUI into the provided http
 // response writer.
 func gui_home_page_handler(w http.ResponseWriter, r *http.Request) {
 	// Generate the html by plugging in data from the gui data model into the
