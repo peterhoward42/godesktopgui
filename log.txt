@@ -26,10 +26,10 @@
 *  Revert to release build
 o  Get into github
     *  make starter project
-    o  clone locally
-    o  copy in this project
-    o  push back to remove
-    o  add image of gui
+    *  clone locally
+    *  copy in this project
+    *  push back to remove
+    *  add image of gui
     o  add bin of gui - beware .ignore
     o  do reamde incl image and bin
 o  Design talk / presso

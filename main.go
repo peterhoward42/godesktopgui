@@ -6,23 +6,20 @@ import (
 	"net/http"
 
 	"github.com/elazarl/go-bindata-assetfs"
-	"github.com/peterhoward42/gostandalonegui/resources"
+	"github.com/peterhoward42/godesktopgui/resources"
 )
 
-// This program demonstrates the potential of Go to create a standalone,
-// desktop, application with a sophisticated GUI. It is implemented as a
-// bundled-up html5 web application and does require a Browser to render it.
-//
-// It compiles everything required into a standard Go statically linked and
-// autonomuous executable. The executable includes a local http server, the web
-// app, and more unusually, all the resource files like CSS and templates. This
-// means that there is nothing to deploy apart from the executable file, and
-// furthermore, no disk access is performed at run time. 
-//
-// The Boost CSS library is used without any additions or alteration to create
-// the GUI. The auxilliary files are converted into resources that can be
-// compiled into the program using the github.com/jteeuwen/go-bindata Go
-// package.  
+// Go has neither a native GUI, nor mature bindings to Qt or another similarly
+// sophisticated library. So this program explores a way for Go to produce a
+// locally running GUI app using an HTML5 web-app architecture, in which the
+// content delivery and the dedicated server are compiled together into a
+// single deployable executable. It additionally, compiles the html, css and
+// template files required into the executable, so the executable has no
+// runtime dependencies apart from a browser to display it. The auxilliary
+// files are converting into compilable Go source code using the
+// github.com/jteeuwen/go-bindata Go package. The example GUI is a loose copy
+// of the Github GUI, and its controls, layout and style are all implented with
+// the Bootstrap CSS library. Go's native html templating is used.
 func main() {
 
 	// Unpack the compiled file resources into an in-memory virtual file system.
