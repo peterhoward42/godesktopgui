@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/bootstrap-theme.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-education"></span></a>
+            <form class="navbar-form navbar-left form-inline" role="search">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><small>This repository</small>
+                        </div>
+                        <input type="text" class="form-control input-sm" placeholder="Search">
+                    </div class="input-group">
+                </div class="form-group">
+            </form class="navbar-form navbar-left" role="search">
+            <ul class="nav navbar-nav">
+                <li class="small"><a href="#"><strong>Requests</strong></a>
+                </li>
+                <li class="small"><a href="#"><strong>Issues</strong></a>
+                </li>
+                <li class="small"><a href="#"><strong>Gist</strong></a>
+                </li>
+            </ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="navbar-brand" data-toggle="tooltip" title="You have no unread notifications">
+                        <span class="glyphicon glyphicon-bell"></span>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">New repository</a>
+                        </li>
+                        <li><a href="#">New organization</a>
+                        </li>
+                        <li><a href="#">New issue</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                        <span class="glyphicon glyphicon-tower"></span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Apple</a><a href="#" class="btn btn-default btn-lg disabled" role="button">Link</a>
+                        </li>
+                        <li><a href="#">Banana</a>
+                        </li>
+                        <li><a href="#">Orange</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul class="nav navbar-nav">
+        </div class="container">
+    </nav class="navbar navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="glyphicon glyphicon-knight"></span>
+                <a class="h4" href="#">peterhoward42</a>
+                <span class="h4">/</span>
+                <a class="h4" href="#"><strong>go-playground</strong></a>
+                <div class="btn-toolbar pull-right" role="toolbar">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-asterisk"></span> Unwatch [{{.Unwatch}}]
+                        </button>
+                    </div class="btn-group" role="group">
+
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-envelope"></span> Star [{{.Star}}]
+                        </button>
+                    </div class="btn-group" role="group">
+
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-film"></span> Fork [{{.Fork}}]
+                        </button>
+                    </div class="btn-group" role="group">
+                </div class="btn-toolbar" role="toolbar">
+                <hr>
+            </div class="col-md-12">
+        </div class="row">
+        <div class="row">
+            <div class="col-md-9">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" size="30" class="form-control" id="description" placeholder="Short description of this repository">
+                    </div>
+                    <div class="form-group">
+                        <label for="website">Website</label>
+                        <input type="text" class="form-control" id="website" placeholder="Website for this repository (optional)">
+                    </div>
+                    <button type="submit" class="btn btn-default">Save</button>
+                </form>
+                <p></p>
+                <div class="panel panel-default">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <span class="glyphicon glyphicon-upload"></span>
+                                <a href="#"><strong>{{.Commits}}</strong> Commits</a>
+                            </td>
+                            <td>
+                                <span class="glyphicon glyphicon-leaf"></span>
+                                <a href="#"><strong>{{.Branch}}</strong> Branch</a>
+                            </td>
+                            <td>
+                                <span class="glyphicon glyphicon-random"></span>
+                                <a href="#"><strong>{{.Release}}</strong> Release</a>
+                            </td>
+                            <td>
+                                <span class="glyphicon glyphicon-globe"></span>
+                                <a href="#"><strong>{{.Contributor}}</strong> Contributor</a>
+                            </td>
+                        </tr>
+                    </table class="table">
+                </div>
+                <button type="button" class="btn btn-default pull-right">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                </button>
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-refresh"></span>
+                        </button>
+                    </div class="btn-group" role="group">
+                    <div class="btn-group" role="group">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                Branch: <strong>master</strong> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Apple</a>
+                                </li>
+                                <li><a href="#">Pear</a>
+                                </li>
+                                <li><a href="#">Cheese</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div class="btn-group" role="group">
+                    <a href="#" class="btn">go-playground</a>
+                    <a href="#" class="btn"> / </a>
+                    <a href="#" class="btn">+</a>
+                </div class="btn-toolbar" role="toolbar">
+                <p></p>
+                <table class="table table-condensed table-bordered">
+                    <tr class="info">
+                        <td colspan="2"><small><strong>peterhoward42</strong> Put in full responsive Bootstrap example</small>
+                        </td>
+                        <td><small>Latest commit 10c5be on Dec 21, 2014</small>
+                        </td>
+                    </tr>
+                    {{range .RowsInTable}}
+                    <tr>
+                        <td>
+                            <span class="glyphicon glyphicon-{{.Icon}}"></span>
+                            <a href="">{{.File}}</a>
+                        </td>
+                        <td>{{.Comment}}</td>
+                        <td>{{.Ago}}</td>
+                    </tr>
+                    {{end}}
+                </table class="table">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><span class="glyphicon glyphicon-book"></span> README</h4>
+                    </div>
+                    <div class="panel-body">
+                        Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                        sunt in culpa qui officia deserunt mollit anim id est laborum </div> </div>
+            </div class="col-md-9">
+            <div class="col-md-3">
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation" class="active"><a href="#"><span class="glyphicon glyphicon-text-size"></span> Code</a>
+                    </li>
+                    <li role="presentation"><a href="#"><span class="glyphicon glyphicon-user text-muted"></span> Contributors</a>
+                    </li>
+                    <li role="presentation"><a href="#"><span class="glyphicon glyphicon-info-sign text-muted"></span> Issues</a>
+                    </li>
+                    <li role="presentation"><a href="#"><span class="glyphicon glyphicon-new-window text-muted"></span> Pull Requests</a>
+                    </li>
+                    <li role="presentation"><a href="#"><span class="glyphicon glyphicon-book text-muted"></span> Wiki</a>
+                    </li>
+                    <li role="presentation"><a href="#"><span class="glyphicon glyphicon-heart text-muted"></span> Pulse</a>
+                    </li>
+                    <li role="presentation"><a href="#"><span class="glyphicon glyphicon-picture text-muted"></span> Graph</a>
+                    </li>
+                    <li role="presentation"><a href="#"><span class="glyphicon glyphicon-wrench text-muted"></span> Settings</a>
+                    </li>
+                </ul>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">Clone</span>
+                    <input type="text" class="form-control" placeholder="https://github.com/peterhoward42/go-experiments.git">
+                    <span class="input-group-btn">foo btn
+
+                        <button type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-copy"></span>
+                    </button>
+                    </span>
+                </div>
+                <p></p>
+                <button type="button" class="btn btn-default btn-block">
+                    <span class="glyphicon glyphicon-save"></span> Clone in desktop
+                </button>
+                <button type="button" class="btn btn-default btn-block">
+                    <span class="glyphicon glyphicon-compressed"></span> Download Zip
+                </button>
+            </div class="col-md-3">
+        </div class="row">
+    </div class="container">
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+</body>
+</html>

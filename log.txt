@@ -1,0 +1,38 @@
+*  Work up net server as per example
+    *  Include static files and template engine
+    *  Rest of tutorial features
+*  Get handler for static resources auto serving them as such
+*  Add bootstrap v lite
+    *  Get local
+    *  Get jquery local
+    *  Make static file that depends on boostrap
+    *  Get working
+*  Upgrade to consume as resources using go-bind
+    *  refactor to make it easier to have fewer entry points
+    *  install go-bind sources
+    *  build g-bind
+    *  run it over contents of static folders and html to see if will compile
+    *  how upgrade static server to consume resources?
+    *  how upgrade handlers that use templates to consume resources?
+    *  completely weaned off real present files?
+*  Test std alone binary in absence of resource files
+*  Template is not using data struct?
+*  Explore debug mode to evolve cuter gui
+*  Make cuter gui
+*  Timeout clean up go code
+*  Accept cannot launch browser
+    *  Get to print message about where running
+    *  Update comments
+*  Revert to release build
+o  Get into github
+    *  make starter project
+    o  clone locally
+    o  copy in this project
+    o  push back to remove
+    o  add image of gui
+    o  add bin of gui - beware .ignore
+    o  do reamde incl image and bin
+o  Design talk / presso
+o  Decide how to pub
+
+4sdck17
