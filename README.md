@@ -17,12 +17,7 @@ Bootstrap CSS library.
 
 Go's native html templating is used.
 
-This repository includes a screenshot of the GUI and a pre-compiled binary (for
-Windows). Nb. The individual file download links on Github's web interface
-seems to be truncating or corrupting the image and the executable files if you
-download them that way, but they are ok if you use the button to download the
-zip file - or clone the repository.
-
+This repository includes a screenshot of the GUI.
 
 ### Build it and try it out
 
@@ -32,8 +27,9 @@ To get the code:
 
 To compile the html, css etc. files into a compilable Go source code module:
 
+    go get -u github.com/jteeuwen/go-bindata/...
     cd github.com/peterhoward42/godesktopgui/resources
-    go-bindata -o resources.go ./...
+    <your gopath>/bin/go-bindata static/... templates/...
 
 To build the server executable:
 

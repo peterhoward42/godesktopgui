@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/elazarl/go-bindata-assetfs"
-	"github.com/peterhoward42/godesktopgui/resources"
 )
 
 // Go has neither a native GUI, nor mature bindings to Qt or another similarly
@@ -24,7 +23,7 @@ func main() {
 
 	// Unpack the compiled file resources into an in-memory virtual file system.
 	virtual_fs := &assetfs.AssetFS{
-		Asset: resources.Asset, AssetDir: resources.AssetDir, Prefix: ""}
+		Asset: Asset, AssetDir: AssetDir, AssetInfo: AssetInfo}
 
 	// Prepare an html template that will be combined with a data model to
 	// serve html pages.
@@ -51,7 +50,7 @@ func main() {
 // representation of its text from a compiled resource.
 func extract_and_parse_html_template() *template.Template {
 	// Expose errors by permitting panic response.
-	bytes, _ := resources.Asset("templates/maingui.html")
+	bytes, _ := Asset("templates/maingui.html")
 	parsed_template, _ := template.New("gui").Parse(string(bytes))
 	return parsed_template
 }
