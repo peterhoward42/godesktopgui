@@ -28,7 +28,7 @@ To get the code:
 To compile the html, css etc. files into a compilable Go source code module:
 
     go get -u github.com/jteeuwen/go-bindata/...
-    cd github.com/peterhoward42/godesktopgui/resources
+    cd github.com/peterhoward42/godesktopgui
     <your gopath>/bin/go-bindata static/... templates/...
 
 To build the server executable:
