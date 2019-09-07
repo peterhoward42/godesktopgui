@@ -3,7 +3,11 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"io/ioutil"
+	"log"
 	"net/http"
+
+	"github.com/peterhoward42/godesktopgui/static"
 )
 
 // Go has neither a native GUI, nor mature bindings to Qt or another similarly
@@ -43,13 +47,21 @@ func main() {
 // Provides a parsed html template, having first extracted the file
 // representation of its text from a compiled resource.
 func extract_and_parse_html_template() *template.Template {
-	return nil
-	/*
-		// Expose errors by permitting panic response.
-		bytes, _ := Asset("templates/maingui.html")
-		parsed_template, _ := template.New("gui").Parse(string(bytes))
-		return parsed_template
-	*/
+	htmlFilename := "templates/maingui.html"
+	file, err := static.Assets.Open(htmlFilename)
+	if err != nil {
+		log.Fatalf("Failed to open <%s>: %v", htmlFilename, err)
+	}
+	defer file.Close()
+	contents, err := ioutil.ReadAll(file)
+	if err != nil {
+		log.Fatalf("Failed to read contents of html file: %v", err)
+	}
+	parsed_template, err := template.New("gui").Parse(string(contents))
+	if err != nil {
+		log.Fatalf("Failed to parse template: %v", err)
+	}
+	return parsed_template
 }
 
 // A data structure for the model part of the example GUI's model-view pattern.
@@ -79,13 +91,10 @@ type TableRow struct {
 func gui_home_page_handler(w http.ResponseWriter, r *http.Request) {
 	// Generate the html by plugging in data from the gui data model into the
 	// prepared html template.
-	w.Write([]byte("Hello world"))
-	/*
-		err := gui_html_template.ExecuteTemplate(w, "gui", gui_data())
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
-	*/
+	err := gui_html_template.ExecuteTemplate(w, "gui", gui_data())
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 // Provides an illustrative, hard-coded instance of a GuiDataModel.
