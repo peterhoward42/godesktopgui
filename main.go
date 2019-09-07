@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-
-	"github.com/elazarl/go-bindata-assetfs"
 )
 
 // Go has neither a native GUI, nor mature bindings to Qt or another similarly
@@ -21,17 +19,13 @@ import (
 // the Bootstrap CSS library. Go's native html templating is used.
 func main() {
 
-	// Unpack the compiled file resources into an in-memory virtual file system.
-	virtual_fs := &assetfs.AssetFS{
-		Asset: Asset, AssetDir: AssetDir, AssetInfo: AssetInfo}
-
 	// Prepare an html template that will be combined with a data model to
 	// serve html pages.
 	gui_html_template = extract_and_parse_html_template()
 
 	// Route incoming web page requests for static URLs (like css files) to
 	// the standard library's file server.
-	http.Handle("/static/", http.FileServer(virtual_fs))
+	http.Handle("/static/", http.FileServer(http.Dir("./static")))
 
 	// Route incoming web page requests for the GUI home page to the dedicated
 	// handler.
@@ -49,10 +43,13 @@ func main() {
 // Provides a parsed html template, having first extracted the file
 // representation of its text from a compiled resource.
 func extract_and_parse_html_template() *template.Template {
-	// Expose errors by permitting panic response.
-	bytes, _ := Asset("templates/maingui.html")
-	parsed_template, _ := template.New("gui").Parse(string(bytes))
-	return parsed_template
+	return nil
+	/*
+		// Expose errors by permitting panic response.
+		bytes, _ := Asset("templates/maingui.html")
+		parsed_template, _ := template.New("gui").Parse(string(bytes))
+		return parsed_template
+	*/
 }
 
 // A data structure for the model part of the example GUI's model-view pattern.
@@ -82,10 +79,13 @@ type TableRow struct {
 func gui_home_page_handler(w http.ResponseWriter, r *http.Request) {
 	// Generate the html by plugging in data from the gui data model into the
 	// prepared html template.
-	err := gui_html_template.ExecuteTemplate(w, "gui", gui_data())
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
+	w.Write([]byte("Hello world"))
+	/*
+		err := gui_html_template.ExecuteTemplate(w, "gui", gui_data())
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	*/
 }
 
 // Provides an illustrative, hard-coded instance of a GuiDataModel.
