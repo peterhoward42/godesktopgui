@@ -7,7 +7,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/peterhoward42/godesktopgui/static"
+    "github.com/peterhoward42/godesktopgui/generate"
+
 )
 
 // Go has neither a native GUI, nor mature bindings to Qt or another similarly
@@ -27,9 +28,9 @@ func main() {
 	// serve html pages.
 	gui_html_template = extract_and_parse_html_template()
 
-	// Route incoming web page requests for static URLs (like css files) to
+	// Route incoming web page requests for file URLs (like css files) to
 	// the standard library's file server.
-	http.Handle("/static/", http.FileServer(http.Dir("./static")))
+	http.Handle("/files/", http.FileServer(generate.CompiledFileSystem))
 
 	// Route incoming web page requests for the GUI home page to the dedicated
 	// handler.
@@ -47,8 +48,8 @@ func main() {
 // Provides a parsed html template, having first extracted the file
 // representation of its text from a compiled resource.
 func extract_and_parse_html_template() *template.Template {
-	htmlFilename := "templates/maingui.html"
-	file, err := static.Assets.Open(htmlFilename)
+	htmlFilename := "files/templates/maingui.html"
+	file, err := generate.CompiledFileSystem.Open(htmlFilename)
 	if err != nil {
 		log.Fatalf("Failed to open <%s>: %v", htmlFilename, err)
 	}
