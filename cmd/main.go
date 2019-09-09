@@ -7,34 +7,33 @@ import (
 	"log"
 	"net/http"
 
-    "github.com/peterhoward42/godesktopgui/generate"
-
+	"github.com/peterhoward42/godesktopgui/generate"
 )
 
-// Go has neither a native GUI, nor mature bindings to Qt or another similarly
-// sophisticated library. So this program explores a way for Go to produce a
-// locally running GUI app using an HTML5 web-app architecture, in which the
-// content delivery and the dedicated server are compiled together into a
-// single deployable executable. It additionally, compiles the html, css and
-// template files required into the executable, so the executable has no
-// runtime dependencies apart from a browser to display it. The auxilliary
-// files are converting into compilable Go source code using the
-// github.com/jteeuwen/go-bindata Go package. The example GUI is a loose copy
-// of the Github GUI, and its controls, layout and style are all implented with
-// the Bootstrap CSS library. Go's native html templating is used.
+// htmlTemplate generates the html we wish to serve when we call its
+// ExecuteTemplate method.
+var htmlTemplate *template.Template
+
+// A demo web server application, serving static content from a single endpoint.
+// With the point of interest being that the html, css and javascript have
+// been compiled-in to the executable.
 func main() {
 
-	// Prepare an html template that will be combined with a data model to
+	// Prepare the html template that will be combined with a data model to
 	// serve html pages.
-	gui_html_template = extract_and_parse_html_template()
 
-	// Route incoming web page requests for file URLs (like css files) to
-	// the standard library's file server.
+	htmlTemplate = parseTemplate()
+
+	// The html we serve has href links to css and .js files - the URLs of which
+	// start with /files, so we route all /files requests to the standard
+	// library http.FileServer. The FileServer requires that we provide
+	// an http.FileSystem. And that is how the compiled-in files present
+	// themselves. See the generate package for how this gets created.
+
 	http.Handle("/files/", http.FileServer(generate.CompiledFileSystem))
 
-	// Route incoming web page requests for the GUI home page to the dedicated
-	// handler.
-	http.HandleFunc("/thegui", gui_home_page_handler)
+	// The GUI home page has its own dedicated handler.
+	http.HandleFunc("/thegui", guiHandler)
 
 	fmt.Printf(
 		"To see the GUI, visit this URL with your Web Browser:\n\n %s\n\n",
@@ -47,7 +46,7 @@ func main() {
 
 // Provides a parsed html template, having first extracted the file
 // representation of its text from a compiled resource.
-func extract_and_parse_html_template() *template.Template {
+func parseTemplate() *template.Template {
 	htmlFilename := "files/templates/maingui.html"
 	file, err := generate.CompiledFileSystem.Open(htmlFilename)
 	if err != nil {
@@ -89,10 +88,10 @@ type TableRow struct {
 
 // Sends the html required to render the GUI into the provided http
 // response writer.
-func gui_home_page_handler(w http.ResponseWriter, r *http.Request) {
+func guiHandler(w http.ResponseWriter, r *http.Request) {
 	// Generate the html by plugging in data from the gui data model into the
 	// prepared html template.
-	err := gui_html_template.ExecuteTemplate(w, "gui", gui_data())
+	err := htmlTemplate.ExecuteTemplate(w, "gui", gui_data())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -122,6 +121,3 @@ func gui_data() *GuiDataModel {
 		TableRow{"docs", "Initial commit", "2 months ago", "folder-open"})
 	return gui_data
 }
-
-// Makes the the GUI template available at module-scope.
-var gui_html_template *template.Template = nil
