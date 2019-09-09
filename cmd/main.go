@@ -1,3 +1,6 @@
+// A demo web server application, serving static content from a single endpoint.
+// With the point of interest being that the html, css and javascript have
+// been compiled-in to the executable.
 package main
 
 import (
@@ -10,13 +13,10 @@ import (
 	"github.com/peterhoward42/godesktopgui/generate"
 )
 
-// htmlTemplate generates the html we wish to serve when we call its
-// ExecuteTemplate method.
+// htmlTemplate generates the HTML we serve to implement the GUI when we call
+// its ExecuteTemplate method.
 var htmlTemplate *template.Template
 
-// A demo web server application, serving static content from a single endpoint.
-// With the point of interest being that the html, css and javascript have
-// been compiled-in to the executable.
 func main() {
 
 	// Prepare the html template that will be combined with a data model to
@@ -40,32 +40,38 @@ func main() {
 		"http://localhost:47066/thegui")
 
 	// Spin-up the standard library's http server on a hard-coded port.
-	http.ListenAndServe(":47066", nil)
-
+	err := http.ListenAndServe(":47066", nil)
+	if err != nil {
+		log.Fatalf("http.ListenAndServe: %v", err)
+	}
 }
 
-// Provides a parsed html template, having first extracted the file
-// representation of its text from a compiled resource.
+// parseTemplate retreives a template HTML file from the compiled-in
+// file system, and parses it using the standard library Template.Parse
+// to create a Template object.
 func parseTemplate() *template.Template {
-	htmlFilename := "files/templates/maingui.html"
-	file, err := generate.CompiledFileSystem.Open(htmlFilename)
+	fName := "files/templates/maingui.html"
+	file, err := generate.CompiledFileSystem.Open(fName)
 	if err != nil {
-		log.Fatalf("Failed to open <%s>: %v", htmlFilename, err)
+		log.Fatalf("Failed to open <%s>: %v", fName, err)
 	}
 	defer file.Close()
 	contents, err := ioutil.ReadAll(file)
 	if err != nil {
-		log.Fatalf("Failed to read contents of html file: %v", err)
+		log.Fatalf("Failed to read contents of file: %v", err)
 	}
-	parsed_template, err := template.New("gui").Parse(string(contents))
+	t, err := template.New("gui").Parse(string(contents))
 	if err != nil {
 		log.Fatalf("Failed to parse template: %v", err)
 	}
-	return parsed_template
+	return t
 }
 
-// A data structure for the model part of the example GUI's model-view pattern.
-type GuiDataModel struct {
+// GuiData holds the GUI state data that will be combined with the
+// template to render the GUI HTML. Note it is a hierarchical structure -
+// having a slice of TableRow - which the directives in the templating
+// system is clever enough to iterate over.
+type GuiData struct {
 	Title       string
 	Unwatch     int
 	Star        int
@@ -77,8 +83,7 @@ type GuiDataModel struct {
 	RowsInTable []TableRow
 }
 
-// A sub-model to the GuiDataModel that models a single row in the table
-// displayed in the GUI.
+// TableRow is a slave model to describe a single row in an HTML table.
 type TableRow struct {
 	File    string
 	Comment string
@@ -86,20 +91,26 @@ type TableRow struct {
 	Icon    string
 }
 
-// Sends the html required to render the GUI into the provided http
-// response writer.
+// guiHandler serves the GUI. Simple as that.
 func guiHandler(w http.ResponseWriter, r *http.Request) {
-	// Generate the html by plugging in data from the gui data model into the
-	// prepared html template.
-	err := htmlTemplate.ExecuteTemplate(w, "gui", gui_data())
+
+	// Set the stateful parameters of the Gui data model - to create the
+	// the dynamic user experience.
+	dynamicData := populateGuiData()
+
+	// This (standard library) call combines the template with the data model
+	// to produce the required HTML. What is not obvious is that it does not
+	// return the HTML here, but is capable, in of itself, of writing the HTML
+	// it generates directly to the http.ResponseWriter provided.
+	err := htmlTemplate.ExecuteTemplate(w, "gui", dynamicData)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
-// Provides an illustrative, hard-coded instance of a GuiDataModel.
-func gui_data() *GuiDataModel {
-	gui_data := &GuiDataModel{
+// populateGuiData populates a GuiData trivially with hard-coded data.
+func populateGuiData() *GuiData {
+	guiData := &GuiData{
 		Title:       "Golang Standalone GUI Example",
 		Unwatch:     3,
 		Star:        0,
@@ -109,15 +120,15 @@ func gui_data() *GuiDataModel {
 		Contributor: 1,
 		RowsInTable: []TableRow{},
 	}
-	gui_data.RowsInTable = append(gui_data.RowsInTable,
+	guiData.RowsInTable = append(guiData.RowsInTable,
 		TableRow{"do_this.go", "Initial commit", "1 month ago", "file"})
-	gui_data.RowsInTable = append(gui_data.RowsInTable,
+	guiData.RowsInTable = append(guiData.RowsInTable,
 		TableRow{"do_that.go", "Initial commit", "1 month ago", "file"})
-	gui_data.RowsInTable = append(gui_data.RowsInTable,
+	guiData.RowsInTable = append(guiData.RowsInTable,
 		TableRow{"index.go", "Initial commit", "1 month ago", "file"})
-	gui_data.RowsInTable = append(gui_data.RowsInTable,
+	guiData.RowsInTable = append(guiData.RowsInTable,
 		TableRow{"resources", "Initial commit", "2 months ago", "folder-open"})
-	gui_data.RowsInTable = append(gui_data.RowsInTable,
+	guiData.RowsInTable = append(guiData.RowsInTable,
 		TableRow{"docs", "Initial commit", "2 months ago", "folder-open"})
-	return gui_data
+	return guiData
 }
