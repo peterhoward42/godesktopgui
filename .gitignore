@@ -24,5 +24,6 @@ _testmain.go
 *.prof
 
 .vscode
-generated.go
 __debug_bin
+
+generated.go

@@ -5,12 +5,8 @@
 // The generated code is structured such that the exported variable
 // CompiledFileSystem implements the http.FileSystem interface.
 //
-// Note the go:generate (special syntax) comment below.
-// This allows the go generate command to run the program like this:
+// Note
 //
-// 	cd .
-//  go generate
-
 //go:generate go run generator.go
 
 package main
