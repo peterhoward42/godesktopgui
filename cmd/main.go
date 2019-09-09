@@ -30,7 +30,9 @@ func main() {
 	// an http.FileSystem. And that is how the compiled-in files present
 	// themselves. See the generate package for how this gets created.
 
-	http.Handle("/files/", http.FileServer(generate.CompiledFileSystem))
+	//http.Handle("/files/", http.FileServer(generate.CompiledFileSystem))
+
+	http.Handle("/files/", http.FileServer(http.Dir("resources")))
 
 	// The GUI home page has its own dedicated handler.
 	http.HandleFunc("/thegui", guiHandler)
