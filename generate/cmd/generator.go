@@ -1,11 +1,16 @@
 // A command that reads a file system rooted at ../../resources, serializes
 // what it finds into bytes, and then produces a Go source code file
-// (../generated.go) that has those bytes manifested as variables.
+// (../generated.go) that has the byte representations of those files
+//  manifested as variables.
 //
 // The generated code is structured such that the exported variable
 // CompiledFileSystem implements the http.FileSystem interface.
 //
-// Note
+// The go:generate comment line below makes is possible to run the command
+// easily in the right place with
+//
+//		cd here
+//		go generate
 //
 //go:generate go run generator.go
 
@@ -27,8 +32,8 @@ func main() {
 	var fs http.FileSystem = http.Dir(rootDir)
 
 	// Output the generated file in a directory different from this one,
-	// so that it declaring itself as belonging to a non-main package, does
-	// not clash with this one being obliged to be package main (being a cmd).
+	// so that it can declare itself as belonging to a non-main package, without
+	// clashing with this file being (of necessity in the main package).
 
 	options := vfsgen.Options{
 		Filename:     "../generated.go",

@@ -1,42 +1,32 @@
 ## Make a standalone desktop GUI application with Go
 
 Go has neither a native GUI, nor mature bindings to Qt or another similarly
-sophisticated library. So this program explores a way for Go to produce a
+sophisticated GUI library. So this program explores a way for Go to produce a
 locally running GUI app using an HTML5 web-app architecture, in which the
-content delivery and the dedicated server are compiled together into a single
-deployable executable.
+files required for content delivery, and the dedicated server, are
+compiled together into a single deployable executable file.
 
-It comprises less than 100 lines of Go code. It additionally, compiles the
-html, css and template files required into the executable, so the executable
-has no runtime dependencies apart from a browser to display it.
+It is less than 100 lines of Go code.
 
-The auxilliary files are converting into compilable Go source code using the
-github.com/jteeuwen/go-bindata Go package. The example GUI is a loose copy of
-the Github GUI, and its controls, layout and style are all implented with the
-Bootstrap CSS library.
+The auxilliary files are converting into compilable Go source code using
+https://github.com/shurcooL/vfsgen . The example GUI is a loose copy of
+[the Github GUI](https://github.com/peterhoward42/godesktopgui) .
 
-Go's native html templating is used.
+The page controls, layout and style are all implented with the
+Bootstrap 3 CSS library: https://getbootstrap.com/docs/3.3/ .
 
-This repository includes a screenshot of the GUI.
+Note that Bootstrap 3 comes bundled with an icon library. If you want to
+upgrade to Bootstrap 4 (which does not), you can easily use a different icon
+library like https://useiconic.com/open . Iconic has explict support for
+Bootstrap. You then include the font and css files it depends on in the same
+way as the other files are included.
+
+The GUI html is produced using Go's native html
+templating: https://golang.org/pkg/html/template/ .
 
 ### Build it and try it out
 
-To get the code:
-
-	go get -u github.com/peterhoward42/godesktopgui/...
-
-To compile the html, css etc. files into a compilable Go source code module:
-
-    go get -u github.com/jteeuwen/go-bindata/...
-    cd github.com/peterhoward42/godesktopgui
-    <your gopath>/bin/go-bindata static/... templates/...
-
-To build the server executable:
-
-    cd github.com/peterhoward42/godesktopgui
-    go install
-
-You'll find it in this directory (simply run it:
-
-    <your gopath>/bin/
+	go get github.com/peterhoward42/godesktopgui
+    cd godesktopgui
+    make run
 
