@@ -2,7 +2,11 @@
 
 Go has neither a native GUI, nor mature bindings to Qt or another similarly
 sophisticated GUI library. So this program explores a way for Go to produce a
-locally running GUI app using an HTML5 web-app architecture, in which the
+locally running GUI that looks like this:
+
+![GUI screenshot](docs/screenshotimg.png?raw=true "Some title abc xxx")
+
+The app uses an HTML5 web-app architecture, in which the
 files required for content delivery, and the dedicated server, are
 compiled together into a single deployable executable file.
 
