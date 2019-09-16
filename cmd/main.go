@@ -4,13 +4,13 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
 
 	"github.com/peterhoward42/godesktopgui/generate"
+	"github.com/pkg/browser"
 )
 
 // htmlTemplate generates the HTML we serve to implement the GUI when we call
@@ -35,15 +35,23 @@ func main() {
 	// The GUI home page has its own dedicated handler.
 	http.HandleFunc("/thegui", guiHandler)
 
-	fmt.Printf(
-		"To see the GUI, visit this URL with your Web Browser:\n\n %s\n\n",
-		"http://localhost:47066/thegui")
+	// Spin-up the standard library's http server in a separate goroutine.
+	go func() {
+		err := http.ListenAndServe(":47066", nil)
+		if err != nil {
+			log.Fatalf("http.ListenAndServe: %v", err)
+		}
+	}()
 
-	// Spin-up the standard library's http server on a hard-coded port.
-	err := http.ListenAndServe(":47066", nil)
+	os.Sleep(5)
+	// And bring up a browser window or tab pointing to it.
+	err := browser.OpenURL("http://127.0.0.1:47066/thegui")
 	if err != nil {
-		log.Fatalf("http.ListenAndServe: %v", err)
+		log.Fatalf("browser.Open: %v", err)
 	}
+
+	log.Printf("Finished normally")
+
 }
 
 // parseTemplate retreives a template HTML file from the compiled-in
