@@ -2,7 +2,9 @@
 
 Go has neither a native GUI, nor mature bindings to Qt or another similarly
 sophisticated GUI library. So this program explores a way for Go to produce a
-locally running GUI that looks like this:
+locally running GUI (roughly similar to the GitHub GUI) that looks like this:
+
+## Our Example GUI
 
 ![GUI screenshot](docs/screenshot.png?raw=true "Some title abc xxx")
 
@@ -13,8 +15,7 @@ compiled together into a single deployable executable file.
 It is less than 100 lines of Go code.
 
 The auxilliary files are converting into compilable Go source code using
-https://github.com/shurcooL/vfsgen . The example GUI is a loose copy of
-[the Github GUI](https://github.com/peterhoward42/godesktopgui) .
+https://github.com/shurcooL/vfsgen .
 
 The page controls, layout and style are all implented with the
 Bootstrap 3 CSS library: https://getbootstrap.com/docs/3.3/ .
