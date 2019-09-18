@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/peterhoward42/godesktopgui/generate"
 	"github.com/pkg/browser"
@@ -37,18 +38,25 @@ func main() {
 
 	// Spin-up the standard library's http server in a separate goroutine.
 	go func() {
-		err := http.ListenAndServe(":47066", nil)
+		err := http.ListenAndServe(":8080", nil)
 		if err != nil {
 			log.Fatalf("http.ListenAndServe: %v", err)
 		}
 	}()
 
-	os.Sleep(5)
-	// And bring up a browser window or tab pointing to it.
-	err := browser.OpenURL("http://127.0.0.1:47066/thegui")
+	// Give the server time to be ready.
+	time.Sleep(3 * time.Second)
+
+	// Then bring up a browser window or tab pointing to it.
+	// Note this is asynchronous, and the call returns immediately.
+	err := browser.OpenURL("http://127.0.0.1:8080/thegui")
 	if err != nil {
 		log.Fatalf("browser.Open: %v", err)
 	}
+
+	// Keep the main goroutine alive.
+	wait := make(chan bool)
+	<-wait
 
 	log.Printf("Finished normally")
 

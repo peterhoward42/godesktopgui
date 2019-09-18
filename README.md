@@ -2,7 +2,7 @@
 
 Go has neither a native GUI, nor mature bindings to Qt or another similarly
 sophisticated GUI library. So this program explores a way for Go to produce a
-locally running GUI (roughly similar to the GitHub GUI) that looks like this:
+locally running GUI.
 
 ## Our Example GUI
 
@@ -30,6 +30,10 @@ The GUI html is produced using Go's native html
 templating: https://golang.org/pkg/html/template/ .
 
 ### Build it and try it out
+
+    // Make sure you have a Browser up.
+    // When the program runs it will create a new tab in it, pointing
+    // to the GUI.
 
 	go get github.com/peterhoward42/godesktopgui
     cd godesktopgui
