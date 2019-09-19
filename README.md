@@ -18,7 +18,7 @@ which includes:
 - The spooky `http.Di`r type.
 - The `github.com/pkg/browser` package - for bring up a tab in the user's
   browser programmatically that points to a URL of your choice.
-- How packages like (Bootstrap[https://getbootstrap.com/docs/3.3/] provide
+- How packages like [Bootstrap](https://getbootstrap.com/docs/3.3) provide
   a relatively quick and easy way for non-Front-End specialists to compose 
   a decent looking GUI with rich contemporary controls.
 
