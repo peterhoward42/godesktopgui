@@ -1,39 +1,43 @@
 ## Make a standalone desktop GUI application with Go
 
-Go has neither a native GUI, nor mature bindings to Qt or another similarly
-sophisticated GUI library. So this program explores a way for Go to produce a
-locally running GUI.
+This code shows how to make a GUI Go program that will run locally standalone.
+It is essentially a self-contained web server, dedicated to serving this GUI, 
+using an HTML5 approach, and packaged as a single stand-alone executable with
+no external dependencies. It's only around 100 lines of Go code.
 
-## Our Example GUI
+It aims to be a how-to, and educational example. There's a summary explanation
+below, but there's also a fuller, explanation in 
+(these slides)[https://docs.google.com/presentation/d/1drkVWDZambK5NprhaBVqVuXOPw9rlo6mxrc0kzdsntg/edit?usp=sharing].
+
+The slides cover:
+
+- Using the Go `html.Template package` - as a Model/View pattern to 
+  generate the HTML.
+- The `github.com/shurcooL/vfsgen package` - that generates Go code that
+  incapsulates a set of files, so they can be compiled-in the the app.
+- The above step as a use case for `go generate`.
+- Using `http.FileServer` to serve static files.
+- The brilliant simplicity and utility of the `http.FileSystem` interface.
+- The spooky `http.Di`r type.
+- The `github.com/pkg/browser` package - for bring up a tab in the user's
+  browser programmatically that points to a URL of your choice.
+- How packages like (Bootstrap[https://getbootstrap.com/docs/3.3/] provide
+  a relatively quick and easy way for non-Front-End specialists to compose 
+  a decent looking GUI with rich contemporary controls.
+
+## Here's What the GUI Looks Like
+
+    (its very roughly modelled on the GitHub repo view)
 
 ![GUI screenshot](docs/screenshot.png?raw=true "Some title abc xxx")
 
-The app uses an HTML5 web-app architecture, in which the
-files required for content delivery, and the dedicated server, are
-compiled together into a single deployable executable file.
+Note that we use Bootstrap 3, which comes bundled with an icon library. If you
+want to upgrade to Bootstrap 4 (which does not), you can easily use an
+external icon library like https://useiconic.com/open . Iconic has explict
+support for Bootstrap. You then include the font and css files it depends on
+in the same way as the other files are included.
 
-It is less than 100 lines of Go code.
-
-The auxilliary files are converting into compilable Go source code using
-https://github.com/shurcooL/vfsgen .
-
-The page controls, layout and style are all implented with the
-Bootstrap 3 CSS library: https://getbootstrap.com/docs/3.3/ .
-
-Note that Bootstrap 3 comes bundled with an icon library. If you want to
-upgrade to Bootstrap 4 (which does not), you can easily use a different icon
-library like https://useiconic.com/open . Iconic has explict support for
-Bootstrap. You then include the font and css files it depends on in the same
-way as the other files are included.
-
-The GUI html is produced using Go's native html
-templating: https://golang.org/pkg/html/template/ .
-
-### Build it and try it out
-
-    // Make sure you have a Browser up.
-    // When the program runs it will create a new tab in it, pointing
-    // to the GUI.
+### Get it, Build it, Try it out
 
 	go get github.com/peterhoward42/godesktopgui
     cd godesktopgui
