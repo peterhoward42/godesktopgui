@@ -5,7 +5,7 @@ It is essentially a self-contained web server, dedicated to serving this GUI,
 using an HTML5 approach, and packaged as a single stand-alone executable with
 no external dependencies. It's only around 100 lines of Go code.
 
-There's a walk-through of the key technical aspects (here)[https://docs.google.com/presentation/d/1drkVWDZambK5NprhaBVqVuXOPw9rlo6mxrc0kzdsntg/edit?usp=sharing],  
+There's a walk-through of the key technical aspects [here](https://docs.google.com/presentation/d/1drkVWDZambK5NprhaBVqVuXOPw9rlo6mxrc0kzdsntg/edit?usp=sharing),  
 which includes:
 
 - Using the Go `html.Template package` - as a Model/View pattern to 
