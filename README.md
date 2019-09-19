@@ -24,9 +24,11 @@ which includes:
 
 ## Here's What the GUI Looks Like
 
-    (its very roughly modelled on the GitHub repo view)
+-------
 
 ![GUI screenshot](docs/screenshot.png?raw=true "Some title abc xxx")
+
+-------
 
 Note that we use Bootstrap 3, which comes bundled with an icon library. If you
 want to upgrade to Bootstrap 4 (which does not), you can easily use an
