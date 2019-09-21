@@ -1,6 +1,7 @@
 ## Make a standalone desktop GUI application with Go
 
 This code shows how to make a GUI Go program that will run locally standalone.
+
 It is essentially a self-contained web server, dedicated to serving this GUI, 
 using an HTML5 approach, and packaged as a single stand-alone executable with
 no external dependencies. It's only around 100 lines of Go code.
@@ -11,13 +12,13 @@ which includes:
 - Using the Go `html.Template package` - as a Model/View pattern to 
   generate the HTML.
 - The `github.com/shurcooL/vfsgen package` - that generates Go code that
-  incapsulates a set of files, so they can be compiled-in the the app.
-- The above step as a use case for `go generate`.
+  incapsulates a set of files, so they can be compiled-in to the app.
+- Using `go generate` to run the code generation step.
 - Using `http.FileServer` to serve static files.
 - The brilliant simplicity and utility of the `http.FileSystem` interface.
-- The spooky `http.Di`r type.
-- The `github.com/pkg/browser` package - for bring up a tab in the user's
-  browser programmatically that points to a URL of your choice.
+- The thought provoking `http.Dir` type.
+- The `github.com/pkg/browser` package - for programmatically bringing up a 
+  tab in the user's browser that points to a URL of your choice.
 - How packages like [Bootstrap](https://getbootstrap.com/docs/3.3) provide
   a relatively quick and easy way for non-Front-End specialists to compose 
   a decent looking GUI with rich contemporary controls.
@@ -40,5 +41,6 @@ in the same way as the other files are included.
 
 	go get github.com/peterhoward42/godesktopgui
     cd godesktopgui
-    make run
+    make
 
+This should bring up a tab in your default web browser showing the GUI.

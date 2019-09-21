@@ -23,7 +23,7 @@ func main() {
 	// Prepare the html template that will be combined with a data model to
 	// serve html pages.
 
-	htmlTemplate = parseTemplate()
+	htmlTemplate = parseTemplateFromVirtualFileSystem()
 
 	// The html we serve has href links to css and .js files - the URLs of which
 	// start with /files, so we route all /files requests to the standard
@@ -48,10 +48,16 @@ func main() {
 	// Give the server time to be ready.
 	time.Sleep(2 * time.Second)
 
+	url := "http://127.0.0.1:8080/thegui"
+
+	log.Printf("Web Server is now serving on %v", url)
+	log.Printf("Your browser should now launch a new tab showing the GUI.")
+	log.Printf("Shut down the server by pressing CTRL-C.")
+
 	// Then bring up a browser window or tab pointing to it, using
 	// the pkg/browser package.
 	// Note this is asynchronous, and the call returns immediately.
-	err := browser.OpenURL("http://127.0.0.1:8080/thegui")
+	err := browser.OpenURL(url)
 	if err != nil {
 		log.Fatalf("browser.OpenURL failed: %v", err)
 	}
@@ -61,13 +67,12 @@ func main() {
 	<-wait
 
 	log.Printf("Finished normally")
-
 }
 
-// parseTemplate retreives a template HTML file from the compiled-in
-// file system, and parses it using the standard library Template.Parse
-// to create a Template object.
-func parseTemplate() *template.Template {
+// parseTemplateFromVirtualFileSystem retreives a template HTML file from the 
+// compiled-in file system, and parses it using the standard library 
+// Template.Parse to create a Template object.
+func parseTemplateFromVirtualFileSystem() *template.Template {
 	fName := "files/templates/maingui.html"
 	file, err := generate.CompiledFileSystem.Open(fName)
 	if err != nil {
