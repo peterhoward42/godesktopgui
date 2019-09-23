@@ -25,6 +25,9 @@ func main() {
 
 	htmlTemplate = parseTemplateFromVirtualFileSystem()
 
+	// The GUI home page has its own dedicated handler.
+	http.HandleFunc("/thegui", guiHandler)
+
 	// The html we serve has href links to css and .js files - the URLs of which
 	// start with /files, so we route all /files requests to the standard
 	// library http.FileServer. The FileServer requires that we provide
@@ -33,9 +36,6 @@ func main() {
 	// this, so we can used it directly.
 
 	http.Handle("/files/", http.FileServer(generate.CompiledFileSystem))
-
-	// The GUI home page has its own dedicated handler.
-	http.HandleFunc("/thegui", guiHandler)
 
 	// Spin-up the standard library's http server in a separate goroutine.
 	go func() {
@@ -69,8 +69,8 @@ func main() {
 	log.Printf("Finished normally")
 }
 
-// parseTemplateFromVirtualFileSystem retreives a template HTML file from the 
-// compiled-in file system, and parses it using the standard library 
+// parseTemplateFromVirtualFileSystem retreives a template HTML file from the
+// compiled-in file system, and parses it using the standard library
 // Template.Parse to create a Template object.
 func parseTemplateFromVirtualFileSystem() *template.Template {
 	fName := "files/templates/maingui.html"
