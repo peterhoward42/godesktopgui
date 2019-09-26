@@ -22,3 +22,8 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+.vscode
+__debug_bin
+
+generated.go
