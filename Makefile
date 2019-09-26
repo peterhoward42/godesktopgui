@@ -12,7 +12,7 @@ build: generate
 
 .PHONY: generate
 generate: dep
-	cd generate/cmd; \
+	cd generated/cmd; \
 	go generate; \
 	cd ../..
 

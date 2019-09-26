@@ -37,7 +37,7 @@ func main() {
 
 	options := vfsgen.Options{
 		Filename:     "../generated.go",
-		PackageName:  "generate", // What package declaration do we want in the generated file?
+		PackageName:  "generated", // What package declaration do we want in the generated file?
 		VariableName: "CompiledFileSystem",
 	}
 
