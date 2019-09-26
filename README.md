@@ -22,6 +22,7 @@ no external dependencies. It's only around 100 lines of Go code.
 	git clone git@github.com:peterhoward42/godesktopgui.git
     cd godesktopgui
     make
+	<br>
 
 ## Compiling-in the Asset Files
 
